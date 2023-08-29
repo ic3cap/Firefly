@@ -1,4 +1,5 @@
-const { Client, IntentsBitField } = require('discord.js');
+const { Client, IntentsBitField, Collection } = require('discord.js');
+const { readdirSync } = require('fs');
 require('dotenv').config();
 
 const client = new Client({
@@ -10,15 +11,23 @@ const client = new Client({
     ]
 });
 
+client.commands = new Collection();
+
 client.once('ready', c => {
     console.log(`Logged in as ${c.user.tag}!`);
-    require('./loaders/slash.js');
+    readdirSync(`${__dirname}/loaders`).forEach(loader => require(`./loaders/${loader}`)(client));
 });
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
-    console.log(interaction);
-    // message.channel.send(`🏓Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
+
+    const cmdData = client.commands.get(interaction.commandName);
+
+    if (cmdData) {
+        cmdData.run(client, interaction);
+    } else {
+        return;
+    }
 })
 
 client.login(process.env.TOKEN);
