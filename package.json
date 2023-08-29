@@ -1,0 +1,23 @@
+{
+  "name": "firefly",
+  "version": "1.0.0",
+  "description": "A Discord bot with One Piece themed commands as well as basic utilities.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ic3cap/Firefly.git"
+  },
+  "author": "Asaad Ahmed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ic3cap/Firefly/issues"
+  },
+  "homepage": "https://github.com/ic3cap/Firefly#readme",
+  "dependencies": {
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1"
+  }
+}

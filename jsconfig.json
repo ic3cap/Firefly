@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./"
+    },
+    "path": {
+        "@src": ["src/*"],
+        "@assets": ["src/assets/*"],
+        "@commands": ["src/commands/*"],
+        "@config": ["src/config/*"],
+        "@env": ["env/*"],
+        "@events": ["src/events/*"],
+        "@database": ["src/database/*"],
+        "@utils": ["src/utils/*"],
+    }
+}
