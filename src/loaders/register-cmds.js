@@ -6,8 +6,8 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 const commands = [];
 
 readdirSync(`${__dirname}/../commands`).forEach(folder => readdirSync(`${__dirname}/../commands/${folder}`).forEach(file => {
-    const data = require(`${__dirname}/../commands/${folder}/${file}`);
-    commands.push(data);
+    const cmdData = require(`${__dirname}/../commands/${folder}/${file}`);
+    commands.push(cmdData.data.toJSON());
 }));
 
 module.exports = async (client) => {
@@ -22,9 +22,8 @@ module.exports = async (client) => {
             { body: commands }
         );
 
-        commands.forEach(data => {
-            client.commands.set(data.name, data);
-        });
+        commands.forEach(data => client.commands.set(data.name, { data: data, run: require(`${__dirname}/../commands/misc/${data.name}.js`).run }));
+        //console.log(commands, client.commands);
 
         console.log('Successfully reloaded application (/) commands.');
     } catch (error) {

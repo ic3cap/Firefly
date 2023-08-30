@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const commandUtils = require('../../utils/commands.js');
 
 function capitalizeFirstLetters(input) {
@@ -12,99 +12,88 @@ function capitalizeFirstLetters(input) {
 }
 
 module.exports = {
-    name: 'help',
-    description: 'Gets a list of commands or info on a command',
-    options: [
-        {
-            name: 'category',
-            description: 'Displays all commands in a category',
-            type: ApplicationCommandOptionType.String,
-            required: false,
-            choices: [
-                {
-                    name: 'misc',
-                    value: 'misc'
-                },
-                {
-                    name: 'moderation',
-                    value: 'moderation'
-                },
-                {
-                    name: 'one piece',
-                    value: 'one piece'
-                }
-            ]
-        },
-        {
-            name: 'command',
-            description: 'Displays info about a specific command',
-            type: ApplicationCommandOptionType.String,
-            required: false,
-            choices: [
-                {
-                    name: 'help',
-                    value: 'help'
-                },
-                {
-                    name: 'ping',
-                    value: 'ping'
-                },
-                {
-                    name: 'uptime',
-                    value: 'uptime'
-                }
-            ]
-        }
-    ],
+    data: new SlashCommandBuilder()
+        .setName('help')
+        .setDescription('Gets a list of commands or info on a specific command')
+
+        .addSubcommand(subCommand => subCommand.setName('all').setDescription('Get a list of all commands'))
+
+        .addSubcommand(subCommand => subCommand.setName('category').setDescription('Get a list of commands in a category')
+            .addStringOption(option =>
+                option.setName('category')
+                    .setDescription('The category to get commands from')
+                    .addChoices(
+                        { name: 'Misc', value: 'misc' },
+                        { name: 'Moderation', value: 'moderation' },
+                        { name: 'One Piece', value: 'one piece' },
+                    )
+                    .setRequired(true)))
+
+
+        .addSubcommand(subCommand => subCommand.setName('command').setDescription('Get info on a specific command')
+            .addStringOption(option =>
+                option.setName('command')
+                    .setDescription('The command to get info on')
+                    .addChoices(
+                        { name: 'Help', value: 'help' },
+                        { name: 'Ping', value: 'ping' },
+                        { name: 'Uptime', value: 'uptime' },
+                    )
+                    .setRequired(true))),
+
     async run(client, interaction) {
-        const categoryInteractionValue = interaction.options.get('category') && interaction.options.get('category').value;
-        const commandInteractionValue = interaction.options.get('command') && interaction.options.get('command').value;
+        const subCommand = interaction.options.getSubcommand();
+        switch (subCommand) {
+            case 'all':
+                const categories = commandUtils.getCategories().map(category => capitalizeFirstLetters(category));
+                const embed = new EmbedBuilder();
+                let desc = '';
 
-        if (!categoryInteractionValue && !commandInteractionValue) {
-            const categories = commandUtils.getCategories().map(category => capitalizeFirstLetters(category));
-            const embed = new EmbedBuilder();
-            let desc = '';
+                categories.forEach(category => {
+                    let commands = commandUtils.getCommandsInCategory(category);
+                    for (cmd in commands) {
+                        cmd = commands[cmd];
+                        desc += `\`${category}\` - ${Object.keys(commands).length} commands\nCommand: \`${cmd.data.name}\`\nDescription: ${cmd.data.description}\n\n`;
+                    }
+                });
 
-            categories.forEach(category => {
-                let commands = commandUtils.getCommandsInCategory(category);
-                for (cmd in commands) {
-                    cmd = commands[cmd];
-                    desc += `\`${category}\` - ${Object.keys(commands).length} commands\nCommand: \`${cmd.name}\`\nDescription: ${cmd.description}\n\n`;
+                embed.setTitle('Commands');
+                embed.setColor([130, 255, 180]);
+                embed.setDescription(desc);
+
+                return interaction.reply({ embeds: [embed] }, ephemeral = true);
+            case 'category':
+                const category = interaction.options.getString('category');
+                if (category && commandUtils.doesCategoryExist(category)) {
+                    const commands = commandUtils.getCommandsInCategory(category);
+                    const embed = new EmbedBuilder();
+                    let categoryName = capitalizeFirstLetters(category);
+                    let desc = '';
+
+                    Object.keys(commands).forEach(cmd => {
+                        desc += `\`${cmd}\` - ${commands[cmd].data.description}\n`;
+                    });
+
+                    embed.setTitle(`Commands in ${categoryName} - ${Object.keys(commands).length} commands`);
+                    embed.setColor([130, 255, 180]);
+                    embed.setDescription(desc || 'No commands in this category yet! :(');
+
+                    return interaction.reply({ embeds: [embed] }, ephemeral = true);
+                } else {
+                    return interaction.reply({ content: 'I don\'t think that\'s a valid category. :(' }, ephemeral = true);
                 }
-            });
+            case 'command':
+                const command = interaction.options.getString('command');
+                if (command && commandUtils.doesCommandExist(command)) {
+                    const embed = new EmbedBuilder();
+                    embed.setTitle(`Command - ${command}`);
+                    embed.setColor([130, 255, 180]);
+                    embed.setDescription(`${client.commands.get(command).data.description}`);
 
-            embed.setTitle('Commands');
-            embed.setColor([130, 255, 180]);
-            embed.setDescription(desc);
-
-            return interaction.reply({ embeds: [embed] }, ephemeral = true);
-        };
-
-        if (categoryInteractionValue && commandUtils.doesCategoryExist(categoryInteractionValue)) {
-            const commands = commandUtils.getCommandsInCategory(categoryInteractionValue);
-            const embed = new EmbedBuilder();
-            let category = capitalizeFirstLetters(categoryInteractionValue);
-            let desc = '';
-
-            Object.keys(commands).forEach(cmd => {
-                desc += `\`${cmd}\` - ${commands[cmd].description}\n`;
-            });
-
-            embed.setTitle(`Commands in ${category} - ${Object.keys(commands).length} commands`);
-            embed.setColor([130, 255, 180]);
-            embed.setDescription(desc || 'No commands in this category yet! :(');
-
-            return interaction.reply({ embeds: [embed] }, ephemeral = true);
-        } else if (commandInteractionValue && commandUtils.doesCommandExist(commandInteractionValue)) {
-            const embed = new EmbedBuilder();
-
-            embed.setTitle(`Command: ${commandInteractionValue}`);
-            embed.setColor([130, 255, 180]);
-            embed.setDescription(`${client.commands.get(commandInteractionValue).description}`);
-
-            return interaction.reply({ embeds: [embed] }, ephemeral = true);
-        } else {
-            return interaction.reply({ content: 'That category or command does not exist!', ephemeral: true });
+                    return interaction.reply({ embeds: [embed] }, ephemeral = true);
+                } else {
+                    return interaction.reply({ content: 'I don\'t think that\'s a valid command. :(' }, ephemeral = true);
+                }
         }
     }
 }
