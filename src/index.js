@@ -4,43 +4,47 @@ const { default: mongoose } = require('mongoose');
 require('dotenv').config();
 
 const client = new Client({
-    intents: [
-        IntentsBitField.Flags.Guilds,
-        IntentsBitField.Flags.GuildMembers,
-        IntentsBitField.Flags.GuildMessages,
-        IntentsBitField.Flags.MessageContent
-    ]
+  intents: [
+    IntentsBitField.Flags.Guilds,
+    IntentsBitField.Flags.GuildMembers,
+    IntentsBitField.Flags.GuildMessages,
+    IntentsBitField.Flags.MessageContent
+  ]
 });
 
 client.commands = new Collection();
 
 (async () => {
-    await mongoose.connect(process.env.MONGO_URI)
-        .then(() => {
-            console.log('Successfully connected to MongoDB!');
-        })
-        .catch(err => {
-            console.log(`Error connecting to MongoDB!\nError: ${err}`);
-        });
+  await mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+      console.log('Successfully connected to MongoDB!');
+    })
+    .catch(err => {
+      console.log(`Error connecting to MongoDB!\nError: ${err}`);
+    });
 })();
 
 client.once('ready', c => {
-    console.log(`Logged in as ${c.user.tag}!`);
-    readdirSync(`${__dirname}/loaders`).forEach(loader => require(`./loaders/${loader}`)(client));
+  console.log(`Logged in as ${c.user.tag}!`);
+  readdirSync(`${__dirname}/loaders`).forEach(loader => require(`./loaders/${loader}`)(client));
 });
 
 client.on('interactionCreate', async interaction => {
-    if (!interaction.isChatInputCommand()) return;
-    const cmdData = client.commands.get(interaction.commandName);
-    if (cmdData) {
-        await cmdData.run(client, interaction)
-            .catch(err => {
-                console.log(`Error running command!\nCommand: ${interaction.commandName}\nUserID: ${interaction.member.id}\nGuildID: ${interaction.guildId}\nError: ${err}`);
-            });
-    } else {
-        return;
-    }
-})
+	if (!interaction.isChatInputCommand()) return;
+  const cmdData = client.commands.get(interaction.commandName);
+  if (cmdData) {
+    await cmdData.run(client, interaction)
+      .catch(err => {
+        console.log(`Error running command!\nCommand: ${interaction.commandName}\nUserID: ${interaction.member.id}\nGuildID: ${interaction.guildId}\nError: ${err}`);
+      });
+  } else {
+    return;
+  }
+});
+
+client.on('messageCreate', async message => {
+  if (message.author.bot) return;
+});
 
 /*
 const { MongoClient, ServerApiVersion } = require('mongodb');
