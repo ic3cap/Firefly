@@ -20,9 +20,7 @@ client.once('ready', c => {
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
-
     const cmdData = client.commands.get(interaction.commandName);
-
     if (cmdData) {
         await cmdData.run(client, interaction)
             .catch(err => {
@@ -32,5 +30,9 @@ client.on('interactionCreate', async interaction => {
         return;
     }
 })
+
+/*
+mongodb+srv://fireflyadmin:<password>@firefly-discord-bot.hlh6oby.mongodb.net/?retryWrites=true&w=majority
+*/
 
 client.login(process.env.TOKEN);

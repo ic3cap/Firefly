@@ -41,8 +41,12 @@ module.exports = {
                         { name: 'Help', value: 'help' },
                         { name: 'Ping', value: 'ping' },
                         { name: 'Uptime', value: 'uptime' },
+                        { name: 'Softban', value: 'softban' },
                         { name: 'Ban', value: 'ban' },
+                        { name: 'Unban', value: 'unban' },
                         { name: 'Kick', value: 'kick' },
+                        { name: 'Timeout', value: 'timeout' },
+                        { name: 'Untimeout', value: 'untimeout' },
                     )
                     .setRequired(true))),
 

@@ -33,7 +33,7 @@ module.exports = {
 
         const guild = interaction.guild
         const user = interaction.member.user;
-        const target = await guild.members.fetch(interaction.options.getUser('target').id)
+        const target = await guild.members.fetch(interaction.options.getUser('target').id);
         const reason = interaction.options.getString('reason') || 'No reason provided';
         const days = interaction.options.getInteger('days') || 7;
 
@@ -46,10 +46,10 @@ module.exports = {
         await target.ban({ reason: reason, days: (days * 86400)})
             .then(() => {
                 interaction.editReply({ content: `Successfully banned user!` });
-                interaction.channel.send({ content: `${user} banned ${target.user.tag} for: \`${reason}\`${days === 0 ? '!' : ', and deleted all messages sent by them upto ${days} ago!'}`});
+                interaction.channel.send({ content: `${user} banned ${target.user.tag} (${target.user.id}) for: \`${reason}\`${days === 0 ? '!' : `, and deleted all messages sent by them upto ${days} ago!`}`});
             })
             .catch(err => {
-                console.log(`Error kicking user!\nUserID: ${interaction.member.id}\nGuildID: ${interaction.guildId}\nError: ${err}`);
+                console.log(`Error banning user!\nUserID: ${interaction.member.id}\nGuildID: ${interaction.guildId}\nError: ${err}`);
                 interaction.editReply({ content: 'An error occurred while trying to ban this user! :(', ephemeral: true });
             });
     }

@@ -18,7 +18,8 @@
   "homepage": "https://github.com/ic3cap/Firefly#readme",
   "dependencies": {
     "discord.js": "^14.13.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "mongoose": "^7.5.0"
   },
   "nodemonConfig": {
     "delay": 600000

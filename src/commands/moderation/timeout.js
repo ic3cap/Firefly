@@ -34,7 +34,7 @@ module.exports = {
 
         const guild = interaction.guild
         const user = interaction.member.user;
-        const target = await guild.members.fetch(interaction.options.getUser('target').id)
+        const target = await guild.members.fetch(interaction.options.getUser('target').id);
         const reason = interaction.options.getString('reason') || 'No reason provided';
         const time = interaction.options.getInteger('time') || 1;
 
@@ -47,7 +47,7 @@ module.exports = {
         await target.timeout((time * 60000), reason)
             .then(() => {
                 interaction.editReply({ content: `Successfully timed out user!` });
-                interaction.channel.send({ content: `${user} timed out ${target.user.tag} for ${time} minutes, for: \`${reason}\`` });
+                interaction.channel.send({ content: `${user} timed out ${target.user.tag} (${target.user.id}) for ${time} minutes, for: \`${reason}\`` });
             })
             .catch(err => {
                 console.log(`Error timing out user!\nUserID: ${interaction.member.id}\nGuildID: ${interaction.guildId}\nError: ${err}`);

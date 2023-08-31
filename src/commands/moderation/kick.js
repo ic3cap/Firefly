@@ -28,7 +28,7 @@ module.exports = {
 
         const guild = interaction.guild
         const user = interaction.member.user;
-        const target = await guild.members.fetch(interaction.options.getUser('target').id)
+        const target = await guild.members.fetch(interaction.options.getUser('target').id);
         const reason = interaction.options.getString('reason') || 'No reason provided';
 
         if (target.roles.highest.position >= interaction.member.roles.highest.position) return interaction.editReply({ content: 'You can\'t kick a user with the same or higher role than you! :(', ephemeral: true });
@@ -40,7 +40,7 @@ module.exports = {
         await target.kick(reason)
             .then(() => {
                 interaction.editReply({ content: `Successfully kicked user!` });
-                interaction.channel.send({ content: `${user} kicked ${target.user.tag} for: \`${reason}\`!` });
+                interaction.channel.send({ content: `${user} kicked ${target.user.tag} (${target.user.id}) for: \`${reason}\`!` });
             })
             .catch(err => {
                 console.log(`Error kicking user!\nUserID: ${interaction.member.id}\nGuildID: ${interaction.guildId}\nError: ${err}`);
