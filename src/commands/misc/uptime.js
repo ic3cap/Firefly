@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { Client, Interaction, SlashCommandBuilder } = require('discord.js');
 
 const msToDHMS = ms => {
     let s = Math.floor(ms / 1000);
@@ -10,20 +10,20 @@ const msToDHMS = ms => {
     m %= 60;
     s %= 60;
 
-    /*
-    const remainingH = h % 24;
-    const remainingM = m % 60;
-    const remainingS = s % 60;
-    */
-
-    //return `${d}D:${remainingH}H:${remainingM}M:${remainingS}S`
-    return `${d}D:${h}H:${m}M:${s}S`
+    return `${d} days, ${h} hours, ${m} minutes, ${s} seconds.`
 }
 
 module.exports = {
+    enabled: true,
+    public: true,
+    premium: false,
     data: new SlashCommandBuilder()
         .setName('uptime')
         .setDescription('Gets the bot uptime in days, hours, minutes, and seconds'),
+    /**
+     * @param { Client } client
+     * @param { Interaction } interaction
+     */
     async run(client, interaction) {
         return interaction.reply(`Uptime: ${msToDHMS(client.uptime)}`, ephemeral = true);
     }

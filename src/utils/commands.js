@@ -15,6 +15,15 @@ module.exports = {
         });
         return commands;
     },
+    getCommandCategory(command) {
+        let category;
+        readdirSync(`${__dirname}/../commands`).forEach(folder => {
+            if (readdirSync(`${__dirname}/../commands/${folder}`).includes(`${command}.js`)) {
+                category = folder;
+            }
+        });
+        return category;
+    },
     getCategories() {
         return readdirSync(`${__dirname}/../commands`);
     },

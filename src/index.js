@@ -24,7 +24,7 @@ client.on('interactionCreate', async interaction => {
     const cmdData = client.commands.get(interaction.commandName);
 
     if (cmdData) {
-        cmdData.run(client, interaction)
+        await cmdData.run(client, interaction)
             .catch(err => {
                 console.log(`Error running command!\nCommand: ${interaction.commandName}\nUserID: ${interaction.member.id}\nGuildID: ${interaction.guildId}\nError: ${err}`);
             });

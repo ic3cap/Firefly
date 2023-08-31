@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { Client, Interaction, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const commandUtils = require('../../utils/commands.js');
 
 function capitalizeFirstLetters(input) {
@@ -12,6 +12,9 @@ function capitalizeFirstLetters(input) {
 }
 
 module.exports = {
+    enabled: true,
+    public: true,
+    premium: false,
     data: new SlashCommandBuilder()
         .setName('help')
         .setDescription('Gets a list of commands or info on a specific command')
@@ -38,9 +41,15 @@ module.exports = {
                         { name: 'Help', value: 'help' },
                         { name: 'Ping', value: 'ping' },
                         { name: 'Uptime', value: 'uptime' },
+                        { name: 'Ban', value: 'ban' },
+                        { name: 'Kick', value: 'kick' },
                     )
                     .setRequired(true))),
 
+    /**
+     * @param { Client } client
+     * @param { Interaction } interaction
+     */
     async run(client, interaction) {
         const subCommand = interaction.options.getSubcommand();
         switch (subCommand) {
