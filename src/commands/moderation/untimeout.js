@@ -8,7 +8,7 @@ module.exports = {
         .setName('untimeout')
         .setDescription('Untimeout a user in the server')
         .setDMPermission(false)
-        .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers, true)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers, true)
 
         .addUserOption(option =>
             option.setName('target')

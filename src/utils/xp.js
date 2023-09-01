@@ -5,6 +5,7 @@ const Cooldowns = new Set();
 const getRandomXP = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const getXPForLevel = level => 100 * (level || 1);
 
+/* NOT USING MONGO-DB DURING TESTING
 module.exports = async (client, msg) => {
     if (!msg.inGuild() || msg.author.bot || Cooldowns.has(message.author.id)) return;
 
@@ -33,3 +34,4 @@ module.exports = async (client, msg) => {
         console.log(`Error giving user XP!\nUser: ${msg.author.tag}\nGuild: ${msg.guild.name}\nError: ${error}`);
     }
 }
+*/

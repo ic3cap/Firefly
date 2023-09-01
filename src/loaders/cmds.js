@@ -24,8 +24,6 @@ module.exports = async (client) => {
         );
 
         commands.forEach(data => client.commands.set(data.name, { data: data, run: require(`${__dirname}/../commands/${getCommandCategory(data.name)}/${data.name}.js`).run }));
-        //console.log(commands, client.commands);
-
         console.log('Successfully reloaded application (/) commands.');
     } catch (error) {
         console.log(error);

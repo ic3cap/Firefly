@@ -1,0 +1,42 @@
+{
+    "characters": [
+        {
+            "name": "Luffy Pre-Timeskip",
+            "stars": 1
+        },
+        {
+            "name": "Luffy Pre-Timeskip [Gear 2nd]",
+            "stars": 2
+        },
+        {
+            "name": "Luffy Pre-Timeskip [Nightmare]",
+            "stars": 3
+        },
+        {
+            "name": "Luffy Post-Timeskip",
+            "stars": 4
+        },
+        {
+            "name": "Luffy Post-Timeskip [Gear 2nd]",
+            "stars": 5
+        },
+        {
+            "name": "Luffy Post-Timeskip [Gear 4th: Bounce-Man]",
+            "stars": 6
+        },
+        {
+            "name": "Luffy Post-Timeskip [Gear 4th: Snake-Man]",
+            "stars": 6
+        },
+        {
+            "name": "Luffy Post-Timeskip [Gear 5th]",
+            "stars": 8
+        }
+    ],
+    "powerUps": [
+        {
+            "name":"Zeus",
+            "stars": 6
+        }
+    ]
+}

@@ -47,6 +47,8 @@ module.exports = {
                         { name: 'Kick', value: 'kick' },
                         { name: 'Timeout', value: 'timeout' },
                         { name: 'Untimeout', value: 'untimeout' },
+                        { name: "Register", value: "register" },
+                        { name: "Roll", value: "roll" },
                     )
                     .setRequired(true))),
 
