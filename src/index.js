@@ -28,12 +28,8 @@ client.commands = new Collection();
 */
 
 client.once('ready', c => {
-  try {
-    readdirSync(`${__dirname}/loaders`).forEach(loader => require(`./loaders/${loader}`)(client))
-    console.log(`Successfully deployed bot. Logged in as ${c.user.tag}`);
-  } catch (error) {
-    console.error(`Error deploying bot!\nError: ${error}`);
-  }
+  readdirSync(`${__dirname}/loaders`).forEach(loader => require(`./loaders/${loader}`)(client));
+  console.log(`Successfully deployed bot. Logged in as ${c.user.tag}`);
 });
 
 client.login(process.env.TOKEN);

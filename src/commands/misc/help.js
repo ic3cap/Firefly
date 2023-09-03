@@ -76,7 +76,7 @@ module.exports = {
                 embed.setColor([130, 255, 180]);
                 embed.setDescription(desc);
 
-                return interaction.reply({ embeds: [embed] }, ephemeral = true);
+                return interaction.reply({ embeds: [embed], ephemeral: true });
             case 'category':
                 const category = interaction.options.getString('category');
                 if (category && commandUtils.doesCategoryExist(category)) {
@@ -93,9 +93,9 @@ module.exports = {
                     embed.setColor([130, 255, 180]);
                     embed.setDescription(desc || 'No commands in this category yet! :(');
 
-                    return interaction.reply({ embeds: [embed] }, ephemeral = true);
+                    return interaction.reply({ embeds: [embed], ephemeral: true });
                 } else {
-                    return interaction.reply({ content: 'I don\'t think that\'s a valid category. :(' }, ephemeral = true);
+                    return interaction.reply({ content: 'I don\'t think that\'s a valid category. :(', ephemeral: true } );
                 }
             case 'command':
                 const command = interaction.options.getString('command');
@@ -105,9 +105,9 @@ module.exports = {
                     embed.setColor([130, 255, 180]);
                     embed.setDescription(`${client.commands.get(command).data.description}`);
 
-                    return interaction.reply({ embeds: [embed] }, ephemeral = true);
+                    return interaction.reply({ embeds: [embed], ephemeral: true });
                 } else {
-                    return interaction.reply({ content: 'I don\'t think that\'s a valid command. :(' }, ephemeral = true);
+                    return interaction.reply({ content: 'I don\'t think that\'s a valid command. :(', ephemeral: true });
                 }
         }
     }

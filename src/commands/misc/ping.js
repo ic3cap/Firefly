@@ -12,13 +12,13 @@ module.exports = {
      * @param { Interaction } interaction
      */
     async run(client, interaction) {
-        interaction.reply('Pong! Let\'s see..', ephemeral = true)
-            .then((result) => {
+        interaction.reply({ content: 'Pong! Let\'s see..', ephemeral: true },)
+            .then(result => {
                 return result.edit(`Pong! API Latency is ${Math.round(client.ws.ping)}ms`);
             })
-            .catch((err) => {
+            .catch(err => {
                 console.error(err);
-                return interaction.reply('I encountered an error, oops!', ephemeral = true);
+                return interaction.reply({ content: 'An error occurred while trying to get the API latency!', ephemeral: true });
             });
     }
 }

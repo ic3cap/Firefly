@@ -25,6 +25,6 @@ module.exports = {
      * @param { Interaction } interaction
      */
     async run(client, interaction) {
-        return interaction.reply(`Uptime: ${msToDHMS(client.uptime)}`, ephemeral = true);
+        return interaction.reply({ content: `Uptime: ${msToDHMS(client.uptime)}`, ephemeral: true });
     }
 }

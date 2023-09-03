@@ -8,7 +8,7 @@ const commands = [];
 
 readdirSync(`${__dirname}/../commands`).forEach(folder => readdirSync(`${__dirname}/../commands/${folder}`).forEach(file => {
     const cmdData = require(`${__dirname}/../commands/${folder}/${file}`);
-    if (cmdData.enabled && cmdData.public && !cmdData.premium) commands.push(cmdData.data.toJSON());
+    if (cmdData.enabled) commands.push(cmdData.data.toJSON());
 }));
 
 module.exports = async (client) => {

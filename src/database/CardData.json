@@ -2,35 +2,48 @@
     "characters": [
         {
             "name": "Luffy Pre-Timeskip",
-            "stars": 1
+            "stars": 1,
+            "availability": 0.7
         },
         {
             "name": "Luffy Pre-Timeskip [Gear 2nd]",
-            "stars": 2
+            "stars": 2,
+            "availability": 0.45
         },
         {
             "name": "Luffy Pre-Timeskip [Nightmare]",
-            "stars": 3
+            "stars": 3,
+            "availability": 0.3
         },
         {
             "name": "Luffy Post-Timeskip",
-            "stars": 4
+            "stars": 4,
+            "availability": 0.2
         },
         {
             "name": "Luffy Post-Timeskip [Gear 2nd]",
-            "stars": 5
+            "stars": 5,
+            "availability": 0.1
         },
         {
             "name": "Luffy Post-Timeskip [Gear 4th: Bounce-Man]",
-            "stars": 6
+            "stars": 6,
+            "availability": 0.05
         },
         {
             "name": "Luffy Post-Timeskip [Gear 4th: Snake-Man]",
-            "stars": 6
+            "stars": 6,
+            "availability": 0.05
+        },
+        {
+            "name": "Luffy [Punk Hazard]",
+            "stars": 7,
+            "availability": 0.025
         },
         {
             "name": "Luffy Post-Timeskip [Gear 5th]",
-            "stars": 8
+            "stars": 8,
+            "availability": 0.01
         }
     ],
     "powerUps": [
