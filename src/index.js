@@ -14,18 +14,15 @@ const client = new Client({
 
 client.commands = new Collection();
 
-// NOT USING MONGO-DB DURING TESTING
-/*
 (async () => {
-  await mongoose.connect(process.env.MONGO_URI)
+  await mongoose.connect(process.env.DB_URI)
     .then(() => {
       console.log('Successfully connected to MongoDB!');
     })
     .catch(err => {
-      console.log(`Error connecting to MongoDB!\nError: ${err}`);
+      console.error(`Error connecting to MongoDB!\n${err}`);
     });
 })();
-*/
 
 client.once('ready', c => {
   readdirSync(`${__dirname}/loaders`).forEach(loader => require(`./loaders/${loader}`)(client));

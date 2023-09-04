@@ -39,7 +39,13 @@ module.exports = {
         const cardPool = guildData.cardPool[rarity];
 
         const randomNum = Math.floor(Math.random() * ((cardPool.length - 1) - 0 + 1) + 0);
-        const card = cardPool[randomNum];
+        let card = cardPool[randomNum];
+
+        for (const plrCard in userData.cards) {
+            if (userData.cards[plrCard].name === card.name) {
+                return this.rollCard(guildID, userID, rarity, rollType);
+            }
+        }
 
         userData.cards.push(card);
         userData.rolls[rollType] -= 1;
@@ -55,6 +61,15 @@ module.exports = {
             tier = Rarity[tier];
             if (tier.stars === stars) {
                 return tier.name;
+            }
+        }
+    },
+
+    getStarsByRarity(rarity) {
+        for (let tier of Object.keys(Rarity)) {
+            tier = Rarity[tier];
+            if (tier.name === rarity) {
+                return tier.stars;
             }
         }
     },

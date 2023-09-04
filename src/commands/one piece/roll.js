@@ -35,6 +35,7 @@ module.exports = {
      * @param { Interaction } interaction
      */
     async run(client, interaction) {
+        /*
         const guild = interaction.guild;
         const user = interaction.user;
         const rollType = interaction.options.getString('rolltype') || 'Default';
@@ -55,5 +56,6 @@ module.exports = {
         const card = await CardUtils.rollCard(guild.id, user.id, rarity, rollType);
         console.log(card);
         interaction.reply({ content: `You rolled "${card.name}"!`, ephemeral: true });
+        */
     }
 }
